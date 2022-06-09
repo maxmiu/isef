@@ -1,3 +1,4 @@
 node_modules
 web/public
 server/.env
+server/**/*.js
