@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "ts-node ./src/index.ts",
+    "serve": "ts-node ./src/main.ts",
     "start": "../node_modules/.bin/nodemon",
     "tsc": "tsc"
   },
