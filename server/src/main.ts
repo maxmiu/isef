@@ -1,13 +1,20 @@
 import * as dotenv from "dotenv";
+
 dotenv.config();
 
 import express from 'express';
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import cors from 'cors';
-import { spaRedirect } from "./infrastructure/middleware";
+import { forceHttps, spaRedirect } from "./infrastructure/middleware";
+import { isProd } from "./infrastructure/environment";
 
 const port = process.env.PORT || 4200;
 const app = express();
+
+if (isProd) {
+    app.enable('trust proxy')
+    app.use(forceHttps)
+}
 
 app.use(cors());
 app.use(express.json());
