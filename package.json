@@ -1,0 +1,32 @@
+{
+  "name": "isef",
+  "private": true,
+  "workspaces": [
+    "web",
+    "server"
+  ],
+  "scripts": {
+    "start": "concurrently -n \"WEB,EXP\" -c \"blue,green\" \"yarn web\" \"yarn server\"",
+    "------server-------": "",
+    "server": "yarn workspace server start",
+    "server:build": "yarn workspace server tsc",
+    "------web----------": "",
+    "web": "yarn workspace web dev",
+    "web:build": "yarn workspace web build",
+    "------heroku-------": "",
+    "heroku:host": "yarn workspace server serve",
+    "heroku-postbuild": "yarn workspace web build && cp -r ./web/dist/* ./server/public"
+  },
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxmiu/isef.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/maxmiu/isef/issues"
+  },
+  "homepage": "https://github.com/maxmiu/isef#readme"
+}
