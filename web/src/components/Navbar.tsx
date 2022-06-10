@@ -2,7 +2,7 @@ import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthentication } from "../hooks/useAuthentication";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Settings } from "@mui/icons-material";
 
 export function Navbar() {
     const navigate = useNavigate();
@@ -44,6 +44,9 @@ export function Navbar() {
                     color="inherit"
                   >
                       <AccountCircle/>
+                  </IconButton>
+                  <IconButton color="inherit" onClick={() => navigate("/settings")}>
+                      <Settings/>
                   </IconButton>
                   <Menu
                     id="menu-appbar"
