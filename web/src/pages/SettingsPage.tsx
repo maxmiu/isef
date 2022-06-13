@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { api } from "../api/api";
 import { useRole } from "../hooks/useRole";
 import { InputBox } from "../components/InputBox";
+import { allRoles } from "../../../shared/role";
 
 export function SettingsPage() {
     const {role, setRole} = useRole();
@@ -23,12 +24,11 @@ export function SettingsPage() {
               <Typography variant="h4">Role</Typography>
               <Box display="flex" flexDirection="row">
                   <ButtonGroup>
-                      <Button variant={role === "Student" ? "contained" : "outlined"}
-                              color={role === "Student" ? "primary" : "secondary"}
-                              onClick={() => setRole("Student")}>Student</Button>
-                      <Button variant={role === "Admin" ? "contained" : "outlined"}
-                              color={role === "Admin" ? "primary" : "secondary"}
-                              onClick={() => setRole("Admin")}>Admin</Button>
+                      {allRoles.map(r => (
+                        <Button variant={role === r ? "contained" : "outlined"}
+                                color={role === r ? "primary" : "secondary"}
+                                onClick={() => setRole(r)}>{r}</Button>
+                      ))}
                   </ButtonGroup>
               </Box>
           </InputBox>
