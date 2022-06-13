@@ -10,8 +10,9 @@ import { RequireAuth } from "./auth/RequireAuth";
 import { Navbar } from "./components/Navbar";
 import { IssuesPage } from "./pages/IssuesPage";
 import { SettingsPage } from "./pages/SettingsPage";
-import { QueryProvider } from './bootstrap/QueryProvider'
-import { RoleProvider } from "./bootstrap/RoleProvider";
+import { QueryProvider } from './infrastructure/QueryProvider'
+import { RoleProvider } from "./infrastructure/RoleProvider";
+import { NotificationProvider } from "./infrastructure/NotificationProvider";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -25,25 +26,27 @@ function App() {
       <MsalProvider instance={msalInstance}>
           <RoleProvider>
               <ThemeProvider theme={theme}>
-                  <QueryProvider>
-                      <BrowserRouter>
-                          <Navbar/>
-                          <Container>
-                              <Box marginTop={10}>
-                                  <Routes>
-                                      <Route path="/login" element={<LoginPage/>}/>
-                                      {privateRoutes.map((pr) => (
-                                        <Route key={pr.key} path={pr.to} element={
-                                            <RequireAuth>
-                                                {pr.component}
-                                            </RequireAuth>
-                                        }/>
-                                      ))}
-                                  </Routes>
-                              </Box>
-                          </Container>
-                      </BrowserRouter>
-                  </QueryProvider>
+                  <NotificationProvider>
+                      <QueryProvider>
+                          <BrowserRouter>
+                              <Navbar/>
+                              <Container>
+                                  <Box marginTop={10}>
+                                      <Routes>
+                                          <Route path="/login" element={<LoginPage/>}/>
+                                          {privateRoutes.map((pr) => (
+                                            <Route key={pr.key} path={pr.to} element={
+                                                <RequireAuth>
+                                                    {pr.component}
+                                                </RequireAuth>
+                                            }/>
+                                          ))}
+                                      </Routes>
+                                  </Box>
+                              </Container>
+                          </BrowserRouter>
+                      </QueryProvider>
+                  </NotificationProvider>
               </ThemeProvider>
           </RoleProvider>
       </MsalProvider>
