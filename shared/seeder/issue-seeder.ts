@@ -1,12 +1,12 @@
-import { Issue } from "../../../shared/issue";
 import { faker } from '@faker-js/faker';
+import { Issue } from "../issue";
 
 export const seedIssues = (many?: number): Issue[] => {
     const length = many ?? faker.datatype.number({min: 100, max: 200});
     return Array.from({length}, createIssue);
 }
 
-const createIssue = (): Issue => {
+export const createIssue = (): Issue => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 

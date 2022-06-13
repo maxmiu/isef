@@ -12,6 +12,7 @@
     "server:build": "yarn workspace server tsc",
     "------web----------": "",
     "web": "yarn workspace web dev",
+    "web:test": "yarn workspace web test",
     "web:build": "yarn workspace web build",
     "------heroku-------": "",
     "heroku:host": "yarn workspace server serve",

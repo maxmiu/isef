@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { seedIssues as seedTicketsAction } from "../seeder/issue-seeder";
+import { seedIssues as seedTicketsAction } from "../../../shared/seeder/issue-seeder";
 import { NewIssue, Issue } from "../../../shared/issue";
 
 let issues: Issue[] = [];

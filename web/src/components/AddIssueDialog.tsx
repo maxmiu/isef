@@ -19,6 +19,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { NewIssue } from "../../../shared/issue";
 import { InputBox } from "./InputBox";
 import { useAuthentication } from "../hooks/useAuthentication";
+import { useNotification } from "../infrastructure/NotificationProvider";
 
 const courses = ["BWL", "IGIS", "IMT", "IOBP", "IPMG", "ISEF"];
 
@@ -31,9 +32,24 @@ export type AddIssueProps = {
 
 export function AddIssueDialog(props: AddIssueProps) {
     const {user} = useAuthentication();
+    const {showNotification} = useNotification();
     const queryClient = useQueryClient()
-    const addIssueMutation = useMutation((ticket: NewIssue) => api.addIssue(ticket), {onSuccess: () => queryClient.invalidateQueries('issues')});
-    const {values, isSubmitting, handleSubmit, handleChange, setFieldValue, setSubmitting, touched, setFieldTouched} = useFormik<NewIssue>({
+    const addIssueMutation = useMutation((ticket: NewIssue) => api.addIssue(ticket), {
+        onSuccess: async () => {
+            await queryClient.invalidateQueries('issues')
+            showNotification({severity: 'success', message: 'Issue created'});
+        }
+    });
+    const {
+        values,
+        isSubmitting,
+        handleSubmit,
+        handleChange,
+        setFieldValue,
+        setSubmitting,
+        touched,
+        setFieldTouched
+    } = useFormik<NewIssue>({
         initialValues: {
             description: "",
             comment: "",
@@ -88,7 +104,9 @@ export function AddIssueDialog(props: AddIssueProps) {
                           <InputLabel shrink>Type</InputLabel>
                           <ButtonGroup>
                               {types.map(t => (
-                                <Button key={t} size="large" variant={values.type === t && touched.type ? "contained" : "outlined" } color="primary" onClick={() => {
+                                <Button key={t} size="large"
+                                        variant={values.type === t && touched.type ? "contained" : "outlined"}
+                                        color="primary" onClick={() => {
                                     setFieldTouched("type");
                                     setFieldValue("type", t);
                                 }}>{t}</Button>
