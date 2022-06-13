@@ -3,9 +3,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { AccountCircle, Settings } from "@mui/icons-material";
+import { useRole } from "../hooks/useRole";
 
 export function Navbar() {
     const navigate = useNavigate();
+    const {role} = useRole();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const {isAuthenticated, logout, user} = useAuthentication();
 
@@ -33,7 +35,7 @@ export function Navbar() {
                   </MenuItem>
                   <Typography sx={{flexGrow: 1}}/>
                   <Box marginRight={1}>
-                      <Typography>Hello <b>{user.name}</b></Typography>
+                      <Typography>Hello <b>{user.name}</b> ({role})</Typography>
                   </Box>
                   <IconButton
                     size="large"

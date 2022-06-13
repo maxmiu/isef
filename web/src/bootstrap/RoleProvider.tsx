@@ -15,4 +15,4 @@ export function RoleProvider(props: { children: ReactNode }) {
       <RoleContext.Provider value={contextValue}>
           {props.children}
       </RoleContext.Provider>)
-}
+};

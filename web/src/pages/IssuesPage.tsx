@@ -66,7 +66,6 @@ export function IssuesPage(): JSX.Element {
               <DataGrid columns={columns}
                         style={{"cursor": "pointer"}}
                         rows={filteredIssues}
-                        onRowClick={(e) => navigate(`tickets/${e.id}`)}
                         autoPageSize
                         hideFooterSelectedRowCount
                         checkboxSelection={false}
