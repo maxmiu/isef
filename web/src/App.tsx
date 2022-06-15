@@ -13,6 +13,7 @@ import { SettingsPage } from "./pages/SettingsPage";
 import { QueryProvider } from './infrastructure/QueryProvider'
 import { RoleProvider } from "./infrastructure/RoleProvider";
 import { NotificationProvider } from "./infrastructure/NotificationProvider";
+import { Footer } from "./infrastructure/Footer";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -47,6 +48,7 @@ function App() {
                           </BrowserRouter>
                       </QueryProvider>
                   </NotificationProvider>
+                  <Footer/>
               </ThemeProvider>
           </RoleProvider>
       </MsalProvider>
