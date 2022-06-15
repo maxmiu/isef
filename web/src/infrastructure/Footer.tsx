@@ -9,7 +9,7 @@ export function Footer() {
           <Box mr={1}>
             <img src={LogoIcon} height="20px" width="20px" alt="Logo Icon"/>
           </Box>
-          <Typography variant="caption">Developed by Alex, Fabio, Michael, Max & Simon — {version}</Typography>
+          <Typography variant="caption">Developed by Alex, Fabio, Max, Michael & Simon — {version}</Typography>
       </Box>
     )
 }
