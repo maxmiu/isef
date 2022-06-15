@@ -45,7 +45,7 @@ async function main() {
 }
 
 main()
-  .catch(log.e)
+  .catch(console.error)
   .finally(async () => {
       await prismaClient.$disconnect();
   });
