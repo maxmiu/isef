@@ -6,7 +6,7 @@ export const seedIssues = (many?: number): NewIssue[] => {
     return Array.from({length}, createIssue);
 }
 
-const createIssue = (): NewIssue => {
+export const createIssue = (): NewIssue => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 

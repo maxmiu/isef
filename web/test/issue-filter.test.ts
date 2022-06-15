@@ -1,8 +1,12 @@
 import { createIssue } from "../../shared/seeder/issue-seeder";
 import { filterIssuesBySearchValue } from "../src/filters/issue-filter";
+import { Issue } from "../../shared/issue";
 
 describe('Filter issues', () => {
-    const issue = createIssue();
+    const issue: Issue = {
+        id: 1,
+        ...createIssue(),
+    };
 
     it('should allow to filter case insensitive', () => {
         issue.description = 'test';
