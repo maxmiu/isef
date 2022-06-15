@@ -26,10 +26,6 @@ jobs:
       uses: borales/actions-yarn@v3.0.0
       with:
         cmd: install
-    - name: Write Git Hash
-      uses: borales/actions-yarn@v3.0.0
-      with:
-        cmd: git:hash
     - name: Build React App
       uses: borales/actions-yarn@v3.0.0
       with:
