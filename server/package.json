@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "ts-node ./src/main.ts",
     "start": "../node_modules/.bin/nodemon",
-    "migrate": "prisma migrate dev --name init",
+    "migrate": "prisma migrate deploy",
     "tsc": "tsc"
   },
   "dependencies": {
