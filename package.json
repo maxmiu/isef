@@ -17,7 +17,7 @@
     "git:hash": "node scripts/write-hash.js",
     "------heroku-------": "",
     "heroku:host": "yarn workspace server serve",
-    "heroku-postbuild": "yarn workspace web build && cp -r ./web/dist/* ./server/public"
+    "heroku-postbuild": "yarn git:hash && yarn workspace web build && cp -r ./web/dist/* ./server/public"
   },
   "dependencies": {
     "concurrently": "^7.0.0"
