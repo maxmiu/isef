@@ -33,9 +33,17 @@ export function IssuesTable(props: IssuesTableProps) {
         {field: "title", headerName: "Title", width: 160},
         {field: "course", headerName: "Course", width: 100, align: "center", headerAlign: "center"},
         {
-            field: "created",
+            headerAlign: "center",
+            field: "createdAt",
             headerName: "Created",
-            width: 120,
+            width: 100,
+            valueFormatter: (params) => new Date(params.value as string).toLocaleDateString("de-de")
+        },
+        {
+            headerAlign: "center",
+            field: "updatedAt",
+            headerName: "Updated",
+            width: 100,
             valueFormatter: (params) => new Date(params.value as string).toLocaleDateString("de-de")
         },
         {field: "reporter", headerName: "Reporter", width: 160, renderCell: ReporterCell},

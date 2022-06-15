@@ -7,7 +7,6 @@ export type NewIssue = Omit<Issue, "id">;
 
 export type Issue = {
   id: number;
-  comment: string;
   course: Course;
   description: string;
   reporter: User;

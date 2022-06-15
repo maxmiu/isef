@@ -1,17 +1,16 @@
 import { faker } from '@faker-js/faker';
-import { Issue } from "../issue";
+import { NewIssue } from "../issue";
 
-export const seedIssues = (many?: number): Issue[] => {
+export const seedIssues = (many?: number): NewIssue[] => {
     const length = many ?? faker.datatype.number({min: 100, max: 200});
     return Array.from({length}, createIssue);
 }
 
-export const createIssue = (): Issue => {
+const createIssue = (): NewIssue => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
     return {
-        id: faker.datatype.number(),
         course: faker.helpers.arrayElement(["IGIS", "IMT", "BWL", "IOBP"]),
         reporter: {
             email: faker.internet.exampleEmail(firstName, lastName),
@@ -19,7 +18,6 @@ export const createIssue = (): Issue => {
         },
         created: faker.date.past(3),
         description: faker.lorem.paragraphs(),
-        comment: faker.lorem.paragraph(),
         state: faker.helpers.arrayElement(["Open", "Closed", "Rejected"]),
         title: faker.lorem.sentence(),
         type: faker.helpers.arrayElement(["Bug", "Improvement"]),

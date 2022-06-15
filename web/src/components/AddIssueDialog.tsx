@@ -52,7 +52,6 @@ export function AddIssueDialog(props: AddIssueProps) {
     } = useFormik<NewIssue>({
         initialValues: {
             description: "",
-            comment: "",
             reporter: user,
             created: new Date(),
             type: "Bug",

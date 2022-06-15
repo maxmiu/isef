@@ -6,10 +6,11 @@
     "server"
   ],
   "scripts": {
-    "start": "concurrently -n \"WEB,EXP\" -c \"blue,green\" \"yarn web\" \"yarn server\"",
+    "start": "docker-compose up -d && concurrently -n \"WEB,EXP\" -c \"blue,green\" \"yarn web\" \"yarn server\"",
     "------server-------": "",
     "server": "yarn workspace server start",
     "server:build": "yarn workspace server tsc",
+    "server:migrate": "yarn workspace server migrate",
     "------web----------": "",
     "web": "yarn workspace web dev",
     "web:test": "yarn workspace web test",
