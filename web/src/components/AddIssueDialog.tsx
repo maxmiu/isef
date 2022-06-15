@@ -34,7 +34,7 @@ export function AddIssueDialog(props: AddIssueProps) {
     const {user} = useAuthentication();
     const {showNotification} = useNotification();
     const queryClient = useQueryClient()
-    const addIssueMutation = useMutation((ticket: NewIssue) => api.addIssue(ticket), {
+    const addIssueMutation = useMutation((newIssue: NewIssue) => api.addIssue(newIssue), {
         onSuccess: async () => {
             await queryClient.invalidateQueries('issues')
             showNotification({severity: 'success', message: 'Issue created'});
@@ -70,7 +70,7 @@ export function AddIssueDialog(props: AddIssueProps) {
     return (
       <Dialog open={props.open} onClose={props.onClose} maxWidth="md" fullWidth>
           <form onSubmit={handleSubmit}>
-              <DialogTitle>Add new Ticket</DialogTitle>
+              <DialogTitle>Add new Issue</DialogTitle>
               <DialogContent>
                   <DialogContentText>
                       Please leave a concrete explanation of the problem.
