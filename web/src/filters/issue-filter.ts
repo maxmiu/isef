@@ -16,7 +16,7 @@ export function filterIssuesBySearchValue(issue: Issue, searchValue: string): bo
     }
 
     const lowerCaseSearchValue = searchValue.toLowerCase();
-    if (issue.reporter.name.toLowerCase().includes(lowerCaseSearchValue)) {
+    if (issue.reporter.name?.toLowerCase().includes(lowerCaseSearchValue)) {
         return true;
     }
 
