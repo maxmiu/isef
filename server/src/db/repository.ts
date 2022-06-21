@@ -7,13 +7,15 @@ import { User } from "../../../shared/user";
 export const issuesRepository = {
     createIssue,
     deleteAllIssues,
+    deleteAllComments,
     getAllIssues,
     getIssueById,
     updateIssue,
+    createComment
 }
 
 async function createIssue(newIssue: NewIssue) {
-    await prismaClient.issue.create({
+    return await prismaClient.issue.create({
         data: {
             title: newIssue.title,
             description: newIssue.description,
@@ -56,20 +58,35 @@ async function updateIssue(update: Issue) {
 }
 
 async function getIssueById(id: number) {
-    return await prismaClient.issue.findUnique({where: {id}, include: {reporter: true, comments: true}});
+    return await prismaClient.issue.findUnique({
+          where: {id},
+          include: {
+              reporter: true,
+              comments: {
+                  include: {
+                      author: true
+                  }
+              }
+          }
+      }
+    );
 }
 
 async function deleteAllIssues() {
     return await prismaClient.issue.deleteMany({where: {}})
 }
 
-async function createComment(comment: Comment) {
+async function deleteAllComments() {
+    await prismaClient.comment.deleteMany({where: {}})
+}
+
+async function createComment(issueId: number, comment: Comment) {
     const author = await getOrCreateUser(comment.author);
     await prismaClient.comment.create({
         data: {
             content: comment.content,
             authorId: author.id,
-            issueId: comment.issue.id
+            issueId
         }
     })
 }

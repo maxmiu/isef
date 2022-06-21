@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NewIssue, Issue } from "../../../shared/issue";
+import { NewComment } from "../../../shared/comment";
 
 const url = import.meta.env.VITE_API_URL;
 
@@ -8,6 +9,8 @@ export const api = {
     getIssue: async () => await get<Issue[]>(`${url}/issues`),
     updateIssue: async (update: Issue) => await put(`${url}/issues/${update.id}`, update),
     getIssueDetails: async (id?: string) => await get<Issue>(`${url}/issues/${id}`),
+
+    addComment: async (issueId: number, comment: NewComment) => await post(`${url}/issues/${issueId}/comments`, comment),
 
     seedIssues: async () => await post(`${url}/issues/seed`, null),
     clearIssues: async () => await post(`${url}/issues/clear`, null),

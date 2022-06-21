@@ -5,19 +5,25 @@ import { issuesRepository } from "../db/repository";
 
 export const seedIssues = async (_, res: Response) => {
     const newIssues = seedTicketsAction();
-    for (const issue of newIssues){
-        await issuesRepository.createIssue(issue);
+    for (const issue of newIssues) {
+        const createdIssue = await issuesRepository.createIssue(issue);
+
+        for (const comment of issue.comments) {
+            await issuesRepository.createComment(createdIssue.id, comment);
+
+        }
     }
     res.sendStatus(200);
 }
 
 export const clearIssues = async (_, res: Response) => {
+    await issuesRepository.deleteAllComments();
     await issuesRepository.deleteAllIssues();
     res.sendStatus(200);
 }
 
 export const updateIssue = async (req: Request<Issue>, res: Response) => {
-    try{
+    try {
         const update = req.body as Issue;
         const updatedIssue = await issuesRepository.updateIssue(update);
         res.json(updatedIssue);

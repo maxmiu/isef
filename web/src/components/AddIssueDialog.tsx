@@ -56,6 +56,7 @@ export function AddIssueDialog(props: AddIssueProps) {
             created: new Date(),
             type: "Bug",
             title: "",
+            comments: [],
             course: "IGIS",
             state: "Open"
         },

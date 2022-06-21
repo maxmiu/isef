@@ -17,6 +17,7 @@ import {
 import { httpLogger } from "./infrastructure/http-logger";
 import { log } from "./infrastructure/logger";
 import { prismaClient } from "./db/client";
+import { addComment } from "./api/comments";
 
 async function main() {
     const port = process.env.PORT || 4200;
@@ -39,6 +40,7 @@ async function main() {
     app.get(`${issuesApi}/:id`, getIssueDetails);
     app.post(issuesApi, addIssue);
     app.put(`${issuesApi}/:id`, updateIssue);
+    app.post(`${issuesApi}/:issueId/comments`, addComment);
 
     app.post(`${issuesApi}/seed`, seedIssues);
     app.post(`${issuesApi}/clear`, clearIssues);
