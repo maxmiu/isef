@@ -22,19 +22,21 @@ model Issue {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  email   String
-  name    String?
-  issues  Issue[]
+  id       Int      @id @default(autoincrement())
+  email    String
+  name     String?
+  issues   Issue[]
+  comments Comment[]
 }
 
 model Comment {
   id          Int      @id @default(autoincrement())
-  issue       Issue    @relation(fields: [issueId], references: [id])
-  issueId     Int
-  author      String
   content     String
   createdAt   DateTime @default(now())
+  issue       Issue    @relation(fields: [issueId], references: [id])
+  issueId     Int
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
 }
 
 enum Type {

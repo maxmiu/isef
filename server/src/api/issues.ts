@@ -1,18 +1,33 @@
 import { Request, Response } from "express";
 import { seedIssues as seedTicketsAction } from "../../../shared/seeder/issue-seeder";
-import { NewIssue } from "../../../shared/issue";
-import { getAllIssues, getIssueById, createIssue } from "../db/repository";
+import { Issue, NewIssue } from "../../../shared/issue";
+import { issuesRepository } from "../db/repository";
 
 export const seedIssues = async (_, res: Response) => {
     const newIssues = seedTicketsAction();
     for (const issue of newIssues){
-        await createIssue(issue);
+        await issuesRepository.createIssue(issue);
     }
     res.sendStatus(200);
 }
 
-export const getIssue = async (_, res: Response) => {
-    const allIssues = await getAllIssues();
+export const clearIssues = async (_, res: Response) => {
+    await issuesRepository.deleteAllIssues();
+    res.sendStatus(200);
+}
+
+export const updateIssue = async (req: Request<Issue>, res: Response) => {
+    try{
+        const update = req.body as Issue;
+        const updatedIssue = await issuesRepository.updateIssue(update);
+        res.json(updatedIssue);
+    } catch {
+        res.sendStatus(404);
+    }
+}
+
+export const getAllIssues = async (_, res: Response) => {
+    const allIssues = await issuesRepository.getAllIssues();
     res.json(allIssues);
 }
 
@@ -23,7 +38,7 @@ export const getIssueDetails = async (req: Request, res: Response) => {
         return;
     }
 
-    const issue = await getIssueById(ticketId);
+    const issue = await issuesRepository.getIssueById(ticketId);
     if (!issue) {
         res.sendStatus(404);
         return;
@@ -33,6 +48,6 @@ export const getIssueDetails = async (req: Request, res: Response) => {
 
 export const addIssue = async (req: Request<NewIssue>, res: Response) => {
     const newIssue = req.body;
-    await createIssue(newIssue);
+    await issuesRepository.createIssue(newIssue);
     res.sendStatus(200);
 }

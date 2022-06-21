@@ -7,7 +7,13 @@ import { Request, Response } from 'express';
 import cors from 'cors';
 import { forceHttps, spaRedirect } from "./infrastructure/middleware";
 import { isProd } from "./infrastructure/environment";
-import { addIssue, getIssue, seedIssues } from "./api/issues";
+import {
+    addIssue,
+    clearIssues,
+    seedIssues,
+    getAllIssues,
+    updateIssue, getIssueDetails
+} from "./api/issues";
 import { httpLogger } from "./infrastructure/http-logger";
 import { log } from "./infrastructure/logger";
 import { prismaClient } from "./db/client";
@@ -29,9 +35,13 @@ async function main() {
 
     const issuesApi = "/api/issues";
 
-    app.post(`${issuesApi}/seed`, seedIssues);
+    app.get(issuesApi, getAllIssues);
+    app.get(`${issuesApi}/:id`, getIssueDetails);
     app.post(issuesApi, addIssue);
-    app.get(issuesApi, getIssue);
+    app.put(`${issuesApi}/:id`, updateIssue);
+
+    app.post(`${issuesApi}/seed`, seedIssues);
+    app.post(`${issuesApi}/clear`, clearIssues);
 
     app.get('/api/health', (_: Request, res: Response) => {
         res.send('Application works!');

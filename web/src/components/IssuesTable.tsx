@@ -7,12 +7,15 @@ import { IssueTypeChip } from "./IssueTypeChip";
 import React from "react";
 import { Issue } from "../../../shared/issue";
 import { User } from "../../../shared/user";
+import { useNavigate } from "react-router-dom";
 
 type IssuesTableProps = {
     issues: Issue[]
 }
 
 export function IssuesTable(props: IssuesTableProps) {
+    const navigate = useNavigate();
+
     const columns: GridColumns = [
         {
             field: "state",
@@ -54,6 +57,7 @@ export function IssuesTable(props: IssuesTableProps) {
       <Box height={800} width="100%">
           <DataGrid columns={columns}
                     style={{"cursor": "pointer"}}
+                    onRowClick={(e) => navigate(`issues/${e.id}`)}
                     rows={props.issues}
                     autoPageSize
                     hideFooterSelectedRowCount

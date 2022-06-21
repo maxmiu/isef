@@ -6,8 +6,11 @@ const url = import.meta.env.VITE_API_URL;
 export const api = {
     addIssue: async (issue: NewIssue) => await post(`${url}/issues`, issue),
     getIssue: async () => await get<Issue[]>(`${url}/issues`),
+    updateIssue: async (update: Issue) => await put(`${url}/issues/${update.id}`, update),
     getIssueDetails: async (id?: string) => await get<Issue>(`${url}/issues/${id}`),
+
     seedIssues: async () => await post(`${url}/issues/seed`, null),
+    clearIssues: async () => await post(`${url}/issues/clear`, null),
 }
 
 async function put<T>(url: string, body: any): Promise<T> {
