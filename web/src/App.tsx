@@ -34,7 +34,7 @@ function App() {
                           <BrowserRouter>
                               <Navbar/>
                               <Container>
-                                  <Box marginTop={10}>
+                                  <Box marginY={10}>
                                       <Routes>
                                           <Route path="/login" element={<LoginPage/>}/>
                                           {privateRoutes.map((pr) => (

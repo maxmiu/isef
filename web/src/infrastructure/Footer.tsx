@@ -5,7 +5,7 @@ import LogoIcon from "./../assets/logo_icon.png";
 
 export function Footer() {
     return (
-      <Box bgcolor="#f4f5f7" py={2} position="absolute" bottom={0} width="100%" display="flex" justifyContent="center">
+      <Box bgcolor="#f4f5f7" py={2} maxHeight="55px" position="absolute" bottom={0} width="100%" display="flex" justifyContent="center">
           <Box mr={1}>
             <img src={LogoIcon} height="20px" width="20px" alt="Logo Icon"/>
           </Box>
