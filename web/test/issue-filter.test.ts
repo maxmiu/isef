@@ -4,8 +4,8 @@ import { Issue } from "../../shared/issue";
 
 describe('Filter issues', () => {
     const issue: Issue = {
-        id: 1,
-        ...createIssue(),
+        createdAt: new Date(), id: -1, updatedAt: new Date(),
+        ...createIssue()
     };
 
     it('should allow to filter case insensitive', () => {
