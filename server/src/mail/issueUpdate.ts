@@ -6,7 +6,7 @@ import * as fs from "fs";
 
 export async function sendIssueUpdate(issue: Issue){
     const htmlContent = fs.readFileSync(__dirname + "/issueUpdate.html", "utf8")
-        .replace("LINK", `https://issue-tracker.app/issues${issue.id}`);
+        .replace("LINK", `https://issue-tracker.app/issues/${issue.id}`);
     const msg: MailDataRequired = {
         to: issue.reporter.email,
         from: issueTrackerSender,
