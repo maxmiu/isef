@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridColumns, GridRenderCellParams } from "@mui/x-data-grid";
 import { State } from "../../../shared/state";
 import { IssueStateChip } from "./IssueStateChip";
@@ -17,6 +17,14 @@ export function IssuesTable(props: IssuesTableProps) {
     const navigate = useNavigate();
 
     const columns: GridColumns = [
+        {
+            field: "id",
+            headerName: "ID",
+            width: 50,
+            headerAlign: "center",
+            renderCell: (v: GridRenderCellParams<State>) => (<Typography style={{fontWeight: 'bold'}} variant="body2">{v.id}</Typography>),
+            align: "center",
+        },
         {
             field: "state",
             headerName: "State",
@@ -50,7 +58,7 @@ export function IssuesTable(props: IssuesTableProps) {
             valueFormatter: (params) => new Date(params.value as string).toLocaleDateString("de-de")
         },
         {field: "reporter", headerName: "Reporter", width: 160, renderCell: ReporterCell},
-        {field: "description", headerName: "Description", width: 250},
+        {field: "description", headerName: "Description", width: 200},
     ]
 
     return (
