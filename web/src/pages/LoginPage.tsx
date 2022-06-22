@@ -6,7 +6,6 @@ import IssueTrackerLogo from "./../assets/logo.png";
 import { useAuthentication } from "../hooks/useAuthentication";
 
 export function LoginPage() {
-    const theme = useTheme();
     const navigate = useNavigate();
     const {login} = useAuthentication();
 
