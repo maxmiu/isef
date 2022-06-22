@@ -60,7 +60,6 @@ export function AddIssueDialog(props: AddIssueProps) {
         initialValues: {
             description: "",
             reporter: user,
-            created: new Date(),
             type: "Bug",
             title: "",
             comments: [],

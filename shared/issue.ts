@@ -4,7 +4,7 @@ import { Type } from "./type";
 import { User } from "./user";
 import { Comment } from "./comment";
 
-export type NewIssue = Omit<Issue, "id">;
+export type NewIssue = Omit<Issue, "id"|"createdAt"|"updatedAt">;
 
 export type Issue = {
   id: number;

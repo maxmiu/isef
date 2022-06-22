@@ -11,13 +11,11 @@ export const createIssue = (): NewIssue => {
     return {
         comments: many(createComment, 3),
         course: faker.helpers.arrayElement(["IGIS", "IMT", "BWL", "IOBP"]),
-        createdAt: faker.date.past(3),
         description: faker.lorem.paragraphs(),
         reporter: createUser(),
         state: faker.helpers.arrayElement(["Open", "Closed", "Rejected"]),
         title: faker.lorem.sentence(),
         type: faker.helpers.arrayElement(["Bug", "Improvement"]),
-        updatedAt: faker.date.past(3),
     }
 }
 
