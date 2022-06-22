@@ -8,7 +8,7 @@ import { ErrorAlert } from "../components/ErrorAlert";
 import { IssueStateChip } from "../components/IssueStateChip";
 import { IssueTypeChip } from "../components/IssueTypeChip";
 import { State } from "../../../shared/state";
-import { useRole } from "../hooks/useRole";
+import { useIsAdminOrTutor, useRole } from "../hooks/useRole";
 import { Comments } from "../components/Comments";
 import { UserName } from "../components/UserName";
 import { toLocalDateTime } from "../formatter/date-time-formatter";
@@ -16,7 +16,7 @@ import { Dash } from "../infrastructure/special-characters";
 
 export function IssueDetailsPage() {
     const queryClient = useQueryClient();
-    const {role} = useRole();
+    const isAdminOrTutor = useIsAdminOrTutor();
     const {id} = useParams<{ id: string }>();
     const {data, isLoading, error} = useQuery('issueDetails', () => api.getIssueDetails(id));
     const updateIssue = useMutation((update: Issue) => api.updateIssue(update), {onSuccess: () => queryClient.invalidateQueries('issueDetails')});
@@ -56,7 +56,7 @@ export function IssueDetailsPage() {
                   <Box my={2}>
                       <Typography variant="body1">{data.description}</Typography>
                   </Box>
-                  {role === "Admin" &&
+                  {isAdminOrTutor &&
                       <Box marginTop={6} display="flex" flexDirection="row">
                           <Box width={130}>
                               <Button variant="contained" color="primary"

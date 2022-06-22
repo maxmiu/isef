@@ -3,6 +3,11 @@ import { Role } from "../../../shared/role";
 
 export const roleKey = "role";
 
+export function useIsAdminOrTutor() {
+    const {role} = useRole();
+    return role === "Admin" || role === "Tutor";
+}
+
 export function useRole() {
     const {role, setRole} = useContext(RoleContext);
     return {role, setRole};
