@@ -1,12 +1,13 @@
 import { Issue } from "../../../shared/issue";
 import { Box, Button, Paper, TextField, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React, { KeyboardEventHandler, useState } from "react";
 import { UserName } from "./UserName";
 import { toLocalDateTime } from "../formatter/date-time-formatter";
 import { useMutation, useQueryClient } from "react-query";
 import { NewComment } from "../../../shared/comment";
 import { api } from "../api/api";
 import { useAuthentication } from "../hooks/useAuthentication";
+import { useFormik } from "formik";
 
 export type CommentsProps = {
     issue: Issue;
@@ -16,16 +17,34 @@ export function Comments(props: CommentsProps) {
     const theme = useTheme();
     const {user} = useAuthentication();
     const queryClient = useQueryClient();
-    const [comment, setComment] = useState<string>("");
     const addCommentMutation = useMutation((comment: NewComment) => api.addComment(props.issue.id, comment),
-      {onSuccess: () => queryClient.invalidateQueries('issueDetails')}
+      {
+          onSuccess: async () => {
+              await queryClient.invalidateQueries('issueDetails');
+              resetForm();
+              setSubmitting(false)
+          }
+      }
     );
+    const {values, setSubmitting, isSubmitting, handleChange, handleSubmit, resetForm} = useFormik<NewComment>({
+        initialValues: {
+            content: "",
+            author: user
+        },
+        onSubmit: (newComment) => addCommentMutation.mutate(newComment)
+    });
+
+    const submitOnEnter = (e: any) => {
+        if (e.key === "Enter" && e.metaKey) {
+            handleSubmit();
+        }
+    };
 
     return (
       <Box>
           <Typography variant="h5">Comments:</Typography>
-          {props.issue.comments.sort((a,b) => a.id - b.id).map(c => (
-            <Paper style={{marginTop: theme.spacing(2), padding: theme.spacing(2)}} elevation={2}>
+          {props.issue.comments.sort((a, b) => a.id - b.id).map(c => (
+            <Paper key={c.id} style={{marginTop: theme.spacing(2), padding: theme.spacing(2)}} elevation={2}>
                 <Box>
                     <Typography variant="body2">
                         <>
@@ -39,10 +58,20 @@ export function Comments(props: CommentsProps) {
             </Paper>
           ))}
           <Paper style={{marginTop: theme.spacing(2), padding: theme.spacing(2)}} elevation={2}>
-              <Typography variant="body1">Add a comment:</Typography>
-              <TextField onChange={e => setComment(e.target.value)} style={{marginTop: theme.spacing(2)}} rows={3} fullWidth multiline></TextField>
-              <Button onClick={() => addCommentMutation.mutate({content: comment, author: user})}
-                      style={{marginTop: theme.spacing(2)}} variant="contained">Save</Button>
+              <form onKeyDown={submitOnEnter} onSubmit={handleSubmit}>
+                  <Typography variant="body1">Add a comment:</Typography>
+                  <TextField
+                    id="content"
+                    name="content"
+                    disabled={isSubmitting}
+                    value={values.content}
+                    onChange={handleChange}
+                    style={{marginTop: theme.spacing(2)}}
+                    rows={3}
+                    fullWidth
+                    multiline/>
+                  <Button type="submit" style={{marginTop: theme.spacing(2)}} variant="contained">Save</Button>
+              </form>
           </Paper>
       </Box>
     )
