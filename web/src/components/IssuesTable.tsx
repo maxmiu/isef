@@ -54,12 +54,13 @@ export function IssuesTable(props: IssuesTableProps) {
     ]
 
     return (
-      <Box height={800} width="100%">
+      <Box height='auto' overflow='auto' width="100%">
           <DataGrid columns={columns}
                     style={{"cursor": "pointer"}}
                     onRowClick={(e) => navigate(`issues/${e.id}`)}
                     rows={props.issues}
                     autoPageSize
+                    autoHeight
                     hideFooterSelectedRowCount
                     checkboxSelection={false}
                     disableColumnMenu

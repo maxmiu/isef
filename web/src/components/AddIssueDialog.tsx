@@ -20,6 +20,7 @@ import { NewIssue } from "../../../shared/issue";
 import { InputBox } from "./InputBox";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { useNotification } from "../infrastructure/NotificationProvider";
+import * as Yup from 'yup';
 
 const courses = ["BWL", "IGIS", "IMT", "IOBP", "IPMG", "ISEF"];
 
@@ -30,11 +31,16 @@ export type AddIssueProps = {
     onClose: (value: boolean) => void;
 }
 
+const AddIssueSchema = Yup.object().shape({
+    description: Yup.string().min(10).max(255).required(),
+    title: Yup.string().min(5).max(255).required(),
+})
+
 export function AddIssueDialog(props: AddIssueProps) {
     const {user} = useAuthentication();
     const {showNotification} = useNotification();
     const queryClient = useQueryClient()
-    const addIssueMutation = useMutation((ticket: NewIssue) => api.addIssue(ticket), {
+    const addIssueMutation = useMutation((newIssue: NewIssue) => api.addIssue(newIssue), {
         onSuccess: async () => {
             await queryClient.invalidateQueries('issues')
             showNotification({severity: 'success', message: 'Issue created'});
@@ -42,6 +48,7 @@ export function AddIssueDialog(props: AddIssueProps) {
     });
     const {
         values,
+        errors,
         isSubmitting,
         handleSubmit,
         handleChange,
@@ -60,6 +67,7 @@ export function AddIssueDialog(props: AddIssueProps) {
             course: "IGIS",
             state: "Open"
         },
+        validationSchema: AddIssueSchema,
         onSubmit: (values) => {
             addIssueMutation.mutate(values)
             setSubmitting(false);
@@ -79,6 +87,8 @@ export function AddIssueDialog(props: AddIssueProps) {
                       <Box width="100%" marginTop={0}>
                           <InputBox>
                               <TextField
+                                error={errors.title !== undefined}
+                                helperText={errors.title ?? " "}
                                 fullWidth
                                 id="title"
                                 disabled={isSubmitting}
@@ -89,6 +99,8 @@ export function AddIssueDialog(props: AddIssueProps) {
                           </InputBox>
                           <InputBox marginTop={5}>
                               <TextField
+                                error={errors.description !== undefined}
+                                helperText={errors.description ?? " "}
                                 multiline
                                 rows={6}
                                 fullWidth

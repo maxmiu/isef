@@ -8,10 +8,15 @@ import { NewComment } from "../../../shared/comment";
 import { api } from "../api/api";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { useFormik } from "formik";
+import * as Yup from 'yup';
 
 export type CommentsProps = {
     issue: Issue;
 }
+
+const AddCommentSchema = Yup.object().shape({
+    content: Yup.string().min(2, "Content must be at least 2 characters").max(255).required("Required!"),
+})
 
 export function Comments(props: CommentsProps) {
     const theme = useTheme();
@@ -26,11 +31,12 @@ export function Comments(props: CommentsProps) {
           }
       }
     );
-    const {values, setSubmitting, isSubmitting, handleChange, handleSubmit, resetForm} = useFormik<NewComment>({
+    const {values, setSubmitting, isSubmitting, handleChange, handleSubmit, resetForm, errors} = useFormik<NewComment>({
         initialValues: {
             content: "",
             author: user
         },
+        validationSchema: AddCommentSchema,
         onSubmit: (newComment) => addCommentMutation.mutate(newComment)
     });
 
@@ -63,6 +69,8 @@ export function Comments(props: CommentsProps) {
                   <TextField
                     id="content"
                     name="content"
+                    error={errors.content !== undefined}
+                    helperText={errors.content ?? " "}
                     disabled={isSubmitting}
                     value={values.content}
                     onChange={handleChange}
