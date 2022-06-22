@@ -7,6 +7,7 @@ export const addComment = async (req: Request<NewComment>, res: Response) => {
         const issueId = parseInt(req.params["issueId"]);
         const newComment = req.body;
         await issuesRepository.createComment(issueId, newComment);
+        await issuesRepository.touchIssue(issueId);
         res.sendStatus(204);
     } catch (e){
         console.log(e)

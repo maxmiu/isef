@@ -11,7 +11,8 @@ export const issuesRepository = {
     getAllIssues,
     getIssueById,
     updateIssue,
-    createComment
+    createComment,
+    touchIssue
 }
 
 async function createIssue(newIssue: NewIssue) {
@@ -80,13 +81,17 @@ async function deleteAllComments() {
     await prismaClient.comment.deleteMany({where: {}})
 }
 
+async function touchIssue(issueId: number) {
+    await prismaClient.issue.update({where: {id: issueId}, data: {updatedAt: new Date()}});
+}
+
 async function createComment(issueId: number, comment: Comment) {
     const author = await getOrCreateUser(comment.author);
     await prismaClient.comment.create({
         data: {
             content: comment.content,
             authorId: author.id,
-            issueId
+            issueId,
         }
     })
 }

@@ -9,11 +9,12 @@ export type NewIssue = Omit<Issue, "id">;
 export type Issue = {
   id: number;
   course: Course;
+  createdAt: Date;
   description: string;
   reporter: User;
   state: State;
-  created: Date;
   title: string;
   type: Type;
+  updatedAt: Date;
   comments: Comment[];
 }

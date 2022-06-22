@@ -11,6 +11,8 @@ import { State } from "../../../shared/state";
 import { useRole } from "../hooks/useRole";
 import { Comments } from "../components/Comments";
 import { UserName } from "../components/UserName";
+import { toLocalDateTime } from "../formatter/date-time-formatter";
+import { Dash } from "../infrastructure/special-characters";
 
 export function IssueDetailsPage() {
     const queryClient = useQueryClient();
@@ -44,14 +46,16 @@ export function IssueDetailsPage() {
                           <IssueStateChip value={data.state}/>
                       </Box>
                   </Box>
-                  <Typography variant="h3">{data.title}</Typography>
-                  <Box mt={2}>
-                      <Typography variant="h5">Reporter: <UserName user={data.reporter}/></Typography>
+                  <Typography variant="h3">#{data.id} {Dash} {data.title}</Typography>
+                  <Typography variant="overline">
+                      Created: {toLocalDateTime(data.createdAt)} {Dash} Last updated: {toLocalDateTime(data.updatedAt)}
+                  </Typography>
+                  <Box>
+                      <Typography variant="overline">Reporter: <UserName user={data.reporter}/></Typography>
                   </Box>
                   <Box my={2}>
-                      <Typography variant="h5">Description:</Typography>
+                      <Typography variant="body1">{data.description}</Typography>
                   </Box>
-                  <Typography variant="body2">{data.description}</Typography>
                   {role === "Admin" &&
                       <Box marginTop={6} display="flex" flexDirection="row">
                           <Box width={130}>
