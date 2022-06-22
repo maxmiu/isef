@@ -2,6 +2,7 @@ import { Box, Button, Card, CardContent, Typography, useTheme } from "@mui/mater
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import MicrosoftIcon from "./../assets/microsoft.svg";
+import IssueTrackerLogo from "./../assets/logo.png";
 import { useAuthentication } from "../hooks/useAuthentication";
 
 export function LoginPage() {
@@ -13,15 +14,17 @@ export function LoginPage() {
 
     return (
       <Box display="flex" justifyContent="center" alignContent="center" marginTop="10%">
-          <Card>
+          <Card elevation={4}>
               <CardContent>
-                  <Box borderRadius={2} paddingX={8} style={{backgroundColor: theme.palette.primary.main}}
+                  <Box borderRadius={2}
+                       paddingX={10}
+                       paddingY={2}
                        display="flex" justifyContent="center">
-                      <Typography variant="h3" color="#fff">Login</Typography>
+                      <img src={IssueTrackerLogo} alt=""/>
                   </Box>
-                  <Box display="flex" flexDirection="column" marginTop={3}>
-                      <Typography variant="body1">Not a member yet? Sign in with</Typography>
-                      <Box marginTop={4} display="flex" justifyContent="center">
+                  <Box display="flex" alignItems="center" flexDirection="column" marginTop={5}>
+                      <Typography variant="h5">Sign in with</Typography>
+                      <Box marginTop={2} display="flex" justifyContent="center">
                           <Button color={"secondary"}
                                   startIcon={<img src={MicrosoftIcon} alt="Microsoft Logo"/>}
                                   variant="contained"
