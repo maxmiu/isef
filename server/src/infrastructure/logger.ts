@@ -1,10 +1,10 @@
 export const log = {
-    i: (msg: string) => write(msg, "info"),
-    w: (msg: string) => write(msg, "warning"),
-    e: (msg: string) => write(msg, "error"),
+    i: (msg: any) => write(msg, "info"),
+    w: (msg: any) => write(msg, "warning"),
+    e: (msg: any) => write(msg, "error"),
 }
 
-const write = (msg: string, logLevel: "info" | "warning" | "error") => {
+const write = (msg: any, logLevel: "info" | "warning" | "error") => {
     const time = new Date().toLocaleTimeString();
     const color = logLevelToColor[logLevel];
     const log = `[${colored(logLevel.toUpperCase(), color)}] ${colored(time, "black")} ${msg}`;

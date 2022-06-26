@@ -10,11 +10,18 @@ export async function sendIssueUpdate(issue: Issue) {
         issue: issue
     });
     const msg: MailDataRequired = {
-        to: issue.assignee ? [issue.reporter.email, issue.assignee.email] : issue.reporter.email,
+        to: getEmailRecipients(issue),
         from: issueTrackerSender,
         subject: `[Issue Tracker] Updates for #${issue.id}`,
         text: 'There is one update for your Issue',
         html: template
     }
     await mailClient.send(msg);
+}
+
+const getEmailRecipients = (issue: Issue) => {
+    if (!issue.assignee || issue.assignee.email === issue.reporter.email) {
+        return issue.reporter.email;
+    }
+    return [issue.assignee.email, issue.reporter.email];
 }

@@ -4,6 +4,7 @@ import { Issue, NewIssue } from "../../../shared/issue";
 import { issuesRepository } from "../db/repository";
 import { sendIssueUpdate } from "../mail/issueUpdate";
 import { User } from "../../../shared/user";
+import { log } from "../infrastructure/logger";
 
 export const seedIssues = async (_, res: Response) => {
     const newIssues = seedTicketsAction();
@@ -30,7 +31,8 @@ export const updateIssue = async (req: Request<Issue>, res: Response) => {
         const updatedIssue = await issuesRepository.updateIssue(update);
         await sendIssueUpdate(updatedIssue);
         res.json(updatedIssue);
-    } catch {
+    } catch(e) {
+        log.e(e)
         res.sendStatus(404);
     }
 }
