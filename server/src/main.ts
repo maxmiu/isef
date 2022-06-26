@@ -51,6 +51,7 @@ async function main() {
 
     app.get('*', spaRedirect);
 
+
     app.listen(port, () => {
         log.i(`Application started on port ${port}`);
     });

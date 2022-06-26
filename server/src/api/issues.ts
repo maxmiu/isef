@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { seedIssues as seedTicketsAction } from "../../../shared/seeder/issue-seeder";
 import { Issue, NewIssue } from "../../../shared/issue";
 import { issuesRepository } from "../db/repository";
+import { sendIssueUpdate } from "../mail/issueUpdate";
 
 export const seedIssues = async (_, res: Response) => {
     const newIssues = seedTicketsAction();
@@ -26,6 +27,7 @@ export const updateIssue = async (req: Request<Issue>, res: Response) => {
     try {
         const update = req.body as Issue;
         const updatedIssue = await issuesRepository.updateIssue(update);
+        await sendIssueUpdate(updatedIssue);
         res.json(updatedIssue);
     } catch {
         res.sendStatus(404);

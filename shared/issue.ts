@@ -8,7 +8,7 @@ export type NewIssue = Omit<Issue, "id"|"createdAt"|"updatedAt">;
 
 export type Issue = {
   id: number;
-  course: Course;
+  course: Course | string;
   createdAt: Date;
   description: string;
   reporter: User;

@@ -33,13 +33,20 @@ async function createIssue(newIssue: NewIssue) {
     });
 }
 
-async function getAllIssues() {
+async function getAllIssues(): Promise<Issue[]> {
     return await prismaClient.issue.findMany({
-        include: {reporter: true, comments: true}
+        include: {
+            reporter: true,
+            comments: {
+                include: {
+                    author: true
+                }
+            }
+        }
     });
 }
 
-async function updateIssue(update: Issue) {
+async function updateIssue(update: Issue): Promise<Issue> {
     const issueEntity = await getIssueById(update.id);
     if (!issueEntity) {
         throw new Error(`Issue ${update.id} not found!`);
@@ -47,6 +54,14 @@ async function updateIssue(update: Issue) {
     return await prismaClient.issue.update({
         where: {
             id: update.id
+        },
+        include: {
+            reporter: true,
+            comments: {
+                include: {
+                    author: true
+                }
+            }
         },
         data: {
             course: update.course,
@@ -58,7 +73,7 @@ async function updateIssue(update: Issue) {
     });
 }
 
-async function getIssueById(id: number) {
+async function getIssueById(id: number): Promise<Issue | null> {
     return await prismaClient.issue.findUnique({
           where: {id},
           include: {
