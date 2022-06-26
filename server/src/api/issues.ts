@@ -3,6 +3,7 @@ import { seedIssues as seedTicketsAction } from "../../../shared/seeder/issue-se
 import { Issue, NewIssue } from "../../../shared/issue";
 import { issuesRepository } from "../db/repository";
 import { sendIssueUpdate } from "../mail/issueUpdate";
+import { User } from "../../../shared/user";
 
 export const seedIssues = async (_, res: Response) => {
     const newIssues = seedTicketsAction();
@@ -32,6 +33,13 @@ export const updateIssue = async (req: Request<Issue>, res: Response) => {
     } catch {
         res.sendStatus(404);
     }
+}
+
+export const getOwnIssues = async (req: Request<User>, res: Response) => {
+    const currentUser = req.body;
+    const allIssues = await issuesRepository.getAllIssues();
+    const ownIssues = allIssues.filter((i) => i.reporter.email === currentUser.email || i.assignee?.email === currentUser.email);
+    res.json(ownIssues);
 }
 
 export const getAllIssues = async (_, res: Response) => {

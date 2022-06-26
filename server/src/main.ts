@@ -12,7 +12,9 @@ import {
     clearIssues,
     seedIssues,
     getAllIssues,
-    updateIssue, getIssueDetails
+    updateIssue,
+    getIssueDetails,
+    getOwnIssues
 } from "./api/issues";
 import { httpLogger } from "./infrastructure/http-logger";
 import { log } from "./infrastructure/logger";
@@ -37,6 +39,7 @@ async function main() {
     const issuesApi = "/api/issues";
 
     app.get(issuesApi, getAllIssues);
+    app.post(`${issuesApi}/own`, getOwnIssues);
     app.get(`${issuesApi}/:id`, getIssueDetails);
     app.post(issuesApi, addIssue);
     app.put(`${issuesApi}/:id`, updateIssue);

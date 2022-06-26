@@ -25,7 +25,7 @@ export function IssueDetailsPage() {
 
     if (error) {
         return (
-          <ErrorAlert msg="Could not load details for Ticket"/>
+          <ErrorAlert msg="Could not load details for Issue"/>
         )
     }
 
@@ -67,12 +67,12 @@ export function IssueDetailsPage() {
                   {isAdminOrTutor &&
                       <Box marginTop={6} display="flex" flexDirection="row">
                           <Box width={130}>
-                              <Button variant="contained" color="primary"
+                              <Button disabled={updateIssue.isLoading} variant="contained" color="primary"
                                       onClick={() => toggleIssueState(nextState)}>{nextState === "Open" ? "Open" : "Close"} Issue</Button>
                           </Box>
                           <Box marginLeft={2}>
                               <Button variant="contained" color="warning"
-                                      disabled={data.state === "Rejected"}
+                                      disabled={data.state === "Rejected" || updateIssue.isLoading}
                                       onClick={() => toggleIssueState("Rejected")}>Reject Issue</Button>
                           </Box>
                       </Box>

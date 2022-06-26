@@ -31,7 +31,10 @@ export function Navbar() {
                   <Typography style={{cursor: "pointer"}} variant="h6" onClick={() => navigate("/")}
                               noWrap>Issue Tracker</Typography>
                   <MenuItem key="home" onClick={() => navigate("/")}>
-                      <Typography textAlign="center">Home</Typography>
+                      <Typography textAlign="center">Dashboard</Typography>
+                  </MenuItem>
+                  <MenuItem key="home" onClick={() => navigate("/issues")}>
+                      <Typography textAlign="center">All Issues</Typography>
                   </MenuItem>
                   <Typography sx={{flexGrow: 1}}/>
                   <Box marginRight={1}>

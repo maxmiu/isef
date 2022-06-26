@@ -15,12 +15,14 @@ import { RoleProvider } from "./infrastructure/RoleProvider";
 import { NotificationProvider } from "./infrastructure/NotificationProvider";
 import { Footer } from "./infrastructure/Footer";
 import { IssueDetailsPage } from "./pages/IssueDetailsPage";
+import { DashboardPage } from "./pages/DashboardPage";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
 const privateRoutes = [
-    {key: "home", to: "/", component: <IssuesPage/>},
-    {key: "issues", to: "/issues/:id", component: <IssueDetailsPage/>},
+    {key: "dashboard", to: "/", component: <DashboardPage/>},
+    {key: "issues", to: "/issues", component: <IssuesPage/>},
+    {key: "issueDetails", to: "/issues/:id", component: <IssueDetailsPage/>},
     {key: "settings", to: "/settings", component: <SettingsPage/>},
 ]
 
