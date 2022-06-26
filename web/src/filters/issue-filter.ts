@@ -21,7 +21,7 @@ export function filterIssuesBySearchValue(issue: Issue, searchValue: string): bo
     }
 
     for (const property of issuesFilterProperties) {
-        if (issue[property].toString().toLowerCase().includes(lowerCaseSearchValue)) {
+        if (issue[property]?.toString().toLowerCase().includes(lowerCaseSearchValue)) {
             return true;
         }
     }
