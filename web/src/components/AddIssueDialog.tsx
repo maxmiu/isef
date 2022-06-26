@@ -28,7 +28,7 @@ const types = ["Bug", "Improvement"];
 
 export type AddIssueProps = {
     open: boolean;
-    onClose: (value: boolean) => void;
+    onClose: () => void;
 }
 
 const AddIssueSchema = Yup.object().shape({
@@ -70,12 +70,20 @@ export function AddIssueDialog(props: AddIssueProps) {
         onSubmit: (values) => {
             addIssueMutation.mutate(values)
             setSubmitting(false);
-            props.onClose(true);
+            props.onClose();
         }
     })
 
     return (
-      <Dialog open={props.open} onClose={props.onClose} maxWidth="md" fullWidth>
+      <Dialog open={props.open}
+              maxWidth="md"
+              fullWidth
+              onClose={(event, reason) => {
+                  if (reason === "backdropClick") {
+                      return;
+                  }
+                  props.onClose
+              }}>
           <form onSubmit={handleSubmit}>
               <DialogTitle>Add new Ticket</DialogTitle>
               <DialogContent>
@@ -137,7 +145,7 @@ export function AddIssueDialog(props: AddIssueProps) {
               <DialogActions>
                   <Button variant="contained" color="primary" type="submit">Save</Button>
                   <Button disabled={isSubmitting} variant="contained" color="secondary" type="button"
-                          onClick={() => props.onClose(false)}>Cancel</Button>
+                          onClick={() => props.onClose()}>Cancel</Button>
               </DialogActions>
           </form>
       </Dialog>
