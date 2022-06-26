@@ -8,44 +8,47 @@ datasource db {
 }
 
 model Issue {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String   @db.VarChar(255)
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  title       String    @db.VarChar(255)
   description String
-  course      String   @db.VarChar(255)
-  reporter    User     @relation(fields: [reporterId], references: [id])
+  course      String    @db.VarChar(255)
+  reporter    User      @relation(name: "reporter", fields: [reporterId], references: [id])
   reporterId  Int
+  assignee    User?     @relation(name: "assignee", fields: [assigneeId], references: [id])
+  assigneeId  Int?
   type        Type
   state       State
   comments    Comment[]
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String
-  name     String?
-  issues   Issue[]
-  comments Comment[]
+  id             Int       @id @default(autoincrement())
+  email          String
+  name           String?
+  createdIssues  Issue[]   @relation("reporter")
+  assignedIssues Issue[]   @relation("assignee")
+  comments       Comment[]
 }
 
 model Comment {
-  id          Int      @id @default(autoincrement())
-  content     String
-  createdAt   DateTime @default(now())
-  issue       Issue    @relation(fields: [issueId], references: [id])
-  issueId     Int
-  author      User     @relation(fields: [authorId], references: [id])
-  authorId    Int
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  issue     Issue    @relation(fields: [issueId], references: [id])
+  issueId   Int
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
 }
 
 enum Type {
-    Bug
-    Improvement
+  Bug
+  Improvement
 }
 
 enum State {
-    Open
-    Closed
-    Rejected
+  Open
+  Closed
+  Rejected
 }

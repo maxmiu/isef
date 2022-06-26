@@ -8,6 +8,7 @@ import React from "react";
 import { Issue } from "../../../shared/issue";
 import { User } from "../../../shared/user";
 import { useNavigate } from "react-router-dom";
+import { Dash } from "../infrastructure/special-characters";
 
 type IssuesTableProps = {
     issues: Issue[]
@@ -57,7 +58,8 @@ export function IssuesTable(props: IssuesTableProps) {
             width: 100,
             valueFormatter: (params) => new Date(params.value as string).toLocaleDateString("de-de")
         },
-        {field: "reporter", headerName: "Reporter", width: 160, renderCell: ReporterCell},
+        {field: "reporter", headerName: "Reporter", width: 160, renderCell: UserCell},
+        {field: "assignee", headerName: "Assignee", width: 160, renderCell: UserCell},
         {field: "description", headerName: "Description", width: 200},
     ]
 
@@ -77,6 +79,10 @@ export function IssuesTable(props: IssuesTableProps) {
     )
 }
 
-const ReporterCell = (props: GridRenderCellParams<User>) => (
-  <a onClick={e => e.preventDefault()} href={`mailto:${props.value?.email}`}>{props.value?.name}</a>
-)
+const UserCell = (props: GridRenderCellParams<User>) => {
+    if (!props.value) {
+        return <>{Dash}</>
+    }
+    return (<a onClick={e => e.preventDefault()} href={`mailto:${props.value?.email}`}>{props.value?.name}</a>);
+}
+

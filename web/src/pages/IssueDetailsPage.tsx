@@ -8,13 +8,15 @@ import { ErrorAlert } from "../components/ErrorAlert";
 import { IssueStateChip } from "../components/IssueStateChip";
 import { IssueTypeChip } from "../components/IssueTypeChip";
 import { State } from "../../../shared/state";
-import { useIsAdminOrTutor, useRole } from "../hooks/useRole";
+import { useIsAdminOrTutor } from "../hooks/useRole";
 import { Comments } from "../components/Comments";
 import { UserName } from "../components/UserName";
 import { toLocalDateTime } from "../formatter/date-time-formatter";
 import { Dash } from "../infrastructure/special-characters";
+import { useAuthentication } from "../hooks/useAuthentication";
 
 export function IssueDetailsPage() {
+    const {user} = useAuthentication();
     const queryClient = useQueryClient();
     const isAdminOrTutor = useIsAdminOrTutor();
     const {id} = useParams<{ id: string }>();
@@ -36,6 +38,8 @@ export function IssueDetailsPage() {
     const nextState = data.state === "Open" ? "Closed" : "Open";
     const toggleIssueState = (newState: State) => updateIssue.mutate({...data, ...{state: newState}});
 
+    const assignToMe = () => updateIssue.mutate({...data, ...{assignee: user}});
+
     return (
       <>
           <Paper elevation={2}>
@@ -50,10 +54,14 @@ export function IssueDetailsPage() {
                   <Typography variant="overline">
                       Created: {toLocalDateTime(data.createdAt)} {Dash} Last updated: {toLocalDateTime(data.updatedAt)}
                   </Typography>
-                  <Box>
+                  <Box display="flex" flexDirection="column">
                       <Typography variant="overline">Reporter: <UserName user={data.reporter}/></Typography>
+                      <Typography variant="overline">Assignee: <UserName user={data.assignee}/></Typography>
+                      {isAdminOrTutor && <Box>
+                          <Button disabled={updateIssue.isLoading} onClick={assignToMe} size="small" variant="outlined">Assign to me</Button>
+                      </Box>}
                   </Box>
-                  <Box my={2}>
+                  <Box my={4}>
                       <Typography variant="body1">{data.description}</Typography>
                   </Box>
                   {isAdminOrTutor &&

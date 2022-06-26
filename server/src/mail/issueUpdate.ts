@@ -10,7 +10,7 @@ export async function sendIssueUpdate(issue: Issue) {
         issue: issue
     });
     const msg: MailDataRequired = {
-        to: issue.reporter.email,
+        to: issue.assignee ? [issue.reporter.email, issue.assignee.email] : issue.reporter.email,
         from: issueTrackerSender,
         subject: `[Issue Tracker] Updates for #${issue.id}`,
         text: 'There is one update for your Issue',

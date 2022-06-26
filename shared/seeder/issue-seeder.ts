@@ -9,6 +9,7 @@ export const seedIssues = (): NewIssue[] => {
 
 export const createIssue = (): NewIssue => {
     return {
+        assignee: faker.helpers.maybe(() => createUser()),
         comments: many(createComment, 3),
         course: faker.helpers.arrayElement(["IGIS", "IMT", "BWL", "IOBP"]),
         description: faker.lorem.paragraphs(),

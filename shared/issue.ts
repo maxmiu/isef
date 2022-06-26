@@ -8,6 +8,8 @@ export type NewIssue = Omit<Issue, "id"|"createdAt"|"updatedAt">;
 
 export type Issue = {
   id: number;
+  assignee: User | null | undefined;
+  comments: Comment[];
   course: Course | string;
   createdAt: Date;
   description: string;
@@ -16,5 +18,4 @@ export type Issue = {
   title: string;
   type: Type;
   updatedAt: Date;
-  comments: Comment[];
 }

@@ -16,6 +16,14 @@ export const issuesRepository = {
 }
 
 async function createIssue(newIssue: NewIssue) {
+    const assignee = newIssue.assignee ? {
+        assignee: {
+            create: {
+                email: newIssue.assignee.email,
+                name: newIssue.assignee.name,
+            }
+        }
+    } : {};
     return await prismaClient.issue.create({
         data: {
             title: newIssue.title,
@@ -28,7 +36,8 @@ async function createIssue(newIssue: NewIssue) {
                     email: newIssue.reporter.email,
                     name: newIssue.reporter.name
                 }
-            }
+            },
+            ...assignee
         }
     });
 }
@@ -37,6 +46,7 @@ async function getAllIssues(): Promise<Issue[]> {
     return await prismaClient.issue.findMany({
         include: {
             reporter: true,
+            assignee: true,
             comments: {
                 include: {
                     author: true
@@ -57,6 +67,7 @@ async function updateIssue(update: Issue): Promise<Issue> {
         },
         include: {
             reporter: true,
+            assignee: true,
             comments: {
                 include: {
                     author: true
@@ -64,6 +75,12 @@ async function updateIssue(update: Issue): Promise<Issue> {
             }
         },
         data: {
+            assignee: update.assignee ? {
+                create: {
+                    name: update.assignee.name,
+                    email: update.assignee.email
+                }
+            } : undefined,
             course: update.course,
             description: update.description,
             state: update.state,
@@ -78,6 +95,7 @@ async function getIssueById(id: number): Promise<Issue | null> {
           where: {id},
           include: {
               reporter: true,
+              assignee: true,
               comments: {
                   include: {
                       author: true
