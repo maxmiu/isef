@@ -34,6 +34,8 @@ export type AddIssueProps = {
 const AddIssueSchema = Yup.object().shape({
     description: Yup.string().min(10).max(255).required(),
     title: Yup.string().min(5).max(255).required(),
+    course: Yup.mixed().required(),
+    type: Yup.string().required(),
 })
 
 export function AddIssueDialog(props: AddIssueProps) {
@@ -63,16 +65,29 @@ export function AddIssueDialog(props: AddIssueProps) {
             type: "Bug",
             title: "",
             comments: [],
-            course: "IGIS",
+            course: "BWL",
             state: "Open"
         },
+        validateOnChange: true,
+        validateOnBlur: true,
         validationSchema: AddIssueSchema,
         onSubmit: (values) => {
             addIssueMutation.mutate(values)
             setSubmitting(false);
             props.onClose();
         }
-    })
+    });
+
+    const getHelperText = (field: keyof NewIssue) => {
+        const error = errors[field];
+        if (error === undefined || !touched[field]) {
+            return " ";
+        }
+        return error.toString();
+    }
+
+    const getValidationError = (field: keyof  NewIssue) => touched[field] && Boolean(errors[field]);
+
 
     return (
       <Dialog open={props.open}
@@ -94,8 +109,8 @@ export function AddIssueDialog(props: AddIssueProps) {
                       <Box width="100%" marginTop={0}>
                           <InputBox>
                               <TextField
-                                error={errors.title !== undefined}
-                                helperText={errors.title ?? " "}
+                                error={getValidationError("title")}
+                                helperText={getHelperText("title")}
                                 fullWidth
                                 id="title"
                                 disabled={isSubmitting}
@@ -104,10 +119,10 @@ export function AddIssueDialog(props: AddIssueProps) {
                                 label="Title"
                               />
                           </InputBox>
-                          <InputBox marginTop={5}>
+                          <InputBox marginTop={2}>
                               <TextField
-                                error={errors.description !== undefined}
-                                helperText={errors.description ?? " "}
+                                error={getValidationError("description")}
+                                helperText={getHelperText("description")}
                                 multiline
                                 rows={6}
                                 fullWidth
@@ -124,7 +139,7 @@ export function AddIssueDialog(props: AddIssueProps) {
                           <ButtonGroup>
                               {types.map(t => (
                                 <Button key={t} size="large"
-                                        variant={values.type === t && touched.type ? "contained" : "outlined"}
+                                        variant={values.type === t ? "contained" : "outlined"}
                                         color="primary" onClick={() => {
                                     setFieldTouched("type");
                                     setFieldValue("type", t);
@@ -133,7 +148,8 @@ export function AddIssueDialog(props: AddIssueProps) {
                           </ButtonGroup>
                           <InputBox>
                               <InputLabel shrink>Course</InputLabel>
-                              <Select fullWidth id="course" name="course" value={values.course} onChange={handleChange}>
+                              <Select error={errors.course !== undefined} fullWidth id="course" name="course"
+                                      value={values.course} onChange={handleChange}>
                                   {courses.map((c: string) => (
                                     <MenuItem key={c} value={c}>{c}</MenuItem>
                                   ))}
