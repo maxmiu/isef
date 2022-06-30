@@ -30,7 +30,7 @@ export function NotificationProvider(props: { children: ReactNode }) {
 
     return (
       <NotificationContext.Provider value={contextValue}>
-          <Snackbar anchorOrigin={{vertical: "bottom", horizontal: "right"}}
+          <Snackbar anchorOrigin={{vertical: "top", horizontal: "center"}}
                     open={notification !== undefined}
                     autoHideDuration={6000}
                     onClose={clearNotification}>

@@ -10,6 +10,7 @@ import { IssueStateChip } from "../components/IssueStateChip";
 import { Issue } from "../../../shared/issue";
 import { UserName } from "../components/UserName";
 import { Dash } from "../infrastructure/special-characters";
+import { AddIssueButton } from "../components/AddIssueButton";
 
 export function DashboardPage() {
     const {user} = useAuthentication();
@@ -32,19 +33,22 @@ export function DashboardPage() {
 
     return (
       <Box>
-          <Typography variant="h4">Your work</Typography>
+          <Box display="flex" flexDirection="row">
+              <Typography variant="h4">Your work</Typography>
+              <AddIssueButton sx={{ml: 2}}/>
+          </Box>
           {openIssues.length === 0 && (<NoIssues/>)}
-          {openIssues.map(issue => (<IssueCard issue={issue}/>))}
+          {openIssues.map((issue, i) => (<IssueCard key={i} issue={issue}/>))}
           <Box mt={10}>
               <Typography variant="h4">Archive</Typography>
           </Box>
           {closedIssues.length === 0 && (<NoIssues/>)}
-          {closedIssues.map(issue => (<IssueCard issue={issue}/>))}
+          {closedIssues.map((issue, i) => (<IssueCard key={i} issue={issue}/>))}
       </Box>
     )
 }
 
-function NoIssues(){
+function NoIssues() {
     return (
       <Typography sx={{mt: 2, fontStyle: 'italic'}} variant="h5">{Dash} No Issues {Dash}</Typography>
     )
