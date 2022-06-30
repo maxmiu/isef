@@ -20,7 +20,8 @@ export function SettingsPage() {
               <Typography variant="h4">Seeding</Typography>
               <Box mt={1} display="flex" flexDirection="row">
                   <Button variant="contained" color="primary" onClick={() => seedIssuesMutation.mutate()}>Seed</Button>
-                  <Button style={{marginLeft: theme.spacing(2)}} variant="contained" color="error" onClick={() => clearIssuesMutation.mutate()}>Clear</Button>
+                  <Button style={{marginLeft: theme.spacing(2)}} variant="contained" color="error"
+                          onClick={() => clearIssuesMutation.mutate()}>Clear</Button>
               </Box>
           </InputBox>
           <InputBox>
@@ -28,7 +29,8 @@ export function SettingsPage() {
               <Box mt={1} display="flex" flexDirection="row">
                   <ButtonGroup>
                       {allRoles.map(r => (
-                        <Button variant={role === r ? "contained" : "outlined"}
+                        <Button key={r}
+                                variant={role === r ? "contained" : "outlined"}
                                 color={role === r ? "primary" : "secondary"}
                                 onClick={() => setRole(r)}>{r}</Button>
                       ))}

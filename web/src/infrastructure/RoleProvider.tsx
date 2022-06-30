@@ -1,15 +1,15 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { RoleContext, roleKey } from "../hooks/useRole";
 import { Role } from "../../../shared/role";
-
-const getInitialRole = (): Role => {
-    const initialValue = localStorage.getItem(roleKey)
-    return initialValue ? JSON.parse(initialValue) as Role : "Student";
-}
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export function RoleProvider(props: { children: ReactNode }) {
-    const [role, setRole] = useState<Role | null>(getInitialRole);
+    const [role, setRole] = useLocalStorage<Role>("role", "Student");
     const contextValue = {role, setRole};
+
+    useEffect(() => {
+        localStorage.setItem(roleKey, JSON.stringify(role));
+    }, [role])
 
     return (
       <RoleContext.Provider value={contextValue}>

@@ -30,7 +30,7 @@ export function Navbar() {
               <Toolbar disableGutters>
                   <Typography style={{cursor: "pointer"}} variant="h6" onClick={() => navigate("/")}
                               noWrap>Issue Tracker</Typography>
-                  <MenuItem key="home" onClick={() => navigate("/")}>
+                  <MenuItem key="dashboard" onClick={() => navigate("/")}>
                       <Typography textAlign="center">Dashboard</Typography>
                   </MenuItem>
                   <MenuItem key="home" onClick={() => navigate("/issues")}>
