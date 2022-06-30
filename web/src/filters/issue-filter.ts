@@ -2,7 +2,7 @@ import { Issue } from "../../../shared/issue";
 
 type IssueProperty = keyof Issue;
 
-const issuesFilterProperties: IssueProperty[] = ['state', 'type', 'title', 'course', 'description'];
+const issuesFilterProperties: IssueProperty[] = ['state', 'type', 'title', 'course', 'description', 'id'];
 
 export function filterIssuesBySearchValue(issue: Issue, searchValue: string): boolean {
     if (!searchValue) {
