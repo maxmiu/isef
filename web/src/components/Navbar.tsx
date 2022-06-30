@@ -1,9 +1,10 @@
-import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { AccountCircle, Settings } from "@mui/icons-material";
 import { useRole } from "../hooks/useRole";
+import LogoIcon from "../assets/logo_icon_white.png";
 
 export function Navbar() {
     const navigate = useNavigate();
@@ -27,6 +28,9 @@ export function Navbar() {
     return (
       <AppBar position="fixed">
           <Toolbar sx={{px: 3}} disableGutters>
+              <Box display="flex" alignItems="center" mr={2}>
+                  <img color="white" src={LogoIcon} height="40px" alt=""/>
+              </Box>
               <Typography style={{cursor: "pointer"}} variant="h6" onClick={() => navigate("/")}
                           noWrap>Issue Tracker</Typography>
               <MenuItem key="dashboard" onClick={() => navigate("/")}>
