@@ -9,6 +9,7 @@ import { IssueTypeChip } from "../components/IssueTypeChip";
 import { IssueStateChip } from "../components/IssueStateChip";
 import { Issue } from "../../../shared/issue";
 import { UserName } from "../components/UserName";
+import { Dash } from "../infrastructure/special-characters";
 
 export function DashboardPage() {
     const {user} = useAuthentication();
@@ -26,15 +27,26 @@ export function DashboardPage() {
         )
     }
 
+    const openIssues = data.filter(i => i.state === "Open");
+    const closedIssues = data.filter(i => i.state !== "Open");
+
     return (
       <Box>
           <Typography variant="h4">Your work</Typography>
-          {data.filter(i => i.state === "Open").map(issue => (<IssueCard issue={issue}/>))}
+          {openIssues.length === 0 && (<NoIssues/>)}
+          {openIssues.map(issue => (<IssueCard issue={issue}/>))}
           <Box mt={10}>
               <Typography variant="h4">Archive</Typography>
           </Box>
-          {data.filter(i => i.state !== "Open").map(issue => (<IssueCard issue={issue}/>))}
+          {closedIssues.length === 0 && (<NoIssues/>)}
+          {closedIssues.map(issue => (<IssueCard issue={issue}/>))}
       </Box>
+    )
+}
+
+function NoIssues(){
+    return (
+      <Typography sx={{mt: 2, fontStyle: 'italic'}} variant="h5">{Dash} No Issues {Dash}</Typography>
     )
 }
 
