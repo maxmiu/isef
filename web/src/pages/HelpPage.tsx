@@ -11,7 +11,7 @@ export function HelpPage(){
               <EmailIcon sx={{mr: 1}}/>Contact
           </Typography>
           <Typography sx={{mt: 1}} variant="body1">
-              Please contact as at
+              Please contact us at
               <Link sx={{mx: 1}} href="mailto:help@issue-tracker.app">help@issue-tracker.app</Link>
               if you need any help!
           </Typography>
