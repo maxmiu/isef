@@ -35,8 +35,8 @@ function App() {
                       <QueryProvider>
                           <BrowserRouter>
                               <Navbar/>
-                              <Container>
-                                  <Box marginY={10}>
+                              <Box paddingX={10} marginY={10} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+                                  <Box width="100%" maxWidth="1400px">
                                       <Routes>
                                           <Route path="/login" element={<LoginPage/>}/>
                                           {privateRoutes.map((pr) => (
@@ -48,7 +48,7 @@ function App() {
                                           ))}
                                       </Routes>
                                   </Box>
-                              </Container>
+                              </Box>
                           </BrowserRouter>
                       </QueryProvider>
                   </NotificationProvider>

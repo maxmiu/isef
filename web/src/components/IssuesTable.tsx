@@ -64,7 +64,7 @@ export function IssuesTable(props: IssuesTableProps) {
     ]
 
     return (
-      <Box height='800px' maxHeight='80vh' overflow='auto' width="100%">
+      <Box height='1500px' maxHeight='75vh' overflow='auto' width="100%">
           <DataGrid columns={columns}
                     style={{"cursor": "pointer"}}
                     onRowClick={(e) => navigate(`/issues/${e.id}`)}
