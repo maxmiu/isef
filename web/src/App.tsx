@@ -16,6 +16,7 @@ import { NotificationProvider } from "./infrastructure/NotificationProvider";
 import { Footer } from "./infrastructure/Footer";
 import { IssueDetailsPage } from "./pages/IssueDetailsPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { HelpPage } from "./pages/HelpPage";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -39,6 +40,7 @@ function App() {
                                   <Box width="100%" maxWidth="1400px">
                                       <Routes>
                                           <Route path="/login" element={<LoginPage/>}/>
+                                          <Route path="/help" element={<HelpPage/>}/>
                                           {privateRoutes.map((pr) => (
                                             <Route key={pr.key} path={pr.to} element={
                                                 <RequireAuth>

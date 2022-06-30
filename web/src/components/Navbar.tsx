@@ -75,6 +75,7 @@ export function Navbar() {
                       handleClose();
                       await logout();
                   }}>Logout</MenuItem>
+                  <MenuItem onClick={async () => navigate("/help")}>Help</MenuItem>
               </Menu>
           </Toolbar>
       </AppBar>
