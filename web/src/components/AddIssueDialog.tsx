@@ -101,7 +101,7 @@ export function AddIssueDialog(props: AddIssueProps) {
                   props.onClose
               }}>
           <form onSubmit={handleSubmit}>
-              <DialogTitle>Add new Ticket</DialogTitle>
+              <DialogTitle>Add new Issue</DialogTitle>
               <DialogContent>
                   <DialogContentText>
                       Please leave a concrete explanation of the problem.
