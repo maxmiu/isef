@@ -1,4 +1,4 @@
 const hash = "dummyHash"
-const sprint = 3;
+const sprint = 4;
 
 export const version = `v${sprint} (#${hash})`;
