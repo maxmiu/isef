@@ -43,9 +43,9 @@ export function AddIssueDialog(props: AddIssueProps) {
     const {showNotification} = useNotification();
     const queryClient = useQueryClient()
     const addIssueMutation = useMutation((newIssue: NewIssue) => api.addIssue(newIssue), {
-        onSuccess: async () => {
+        onSuccess: async (response) => {
             await queryClient.invalidateQueries('issues')
-            showNotification({severity: 'success', message: 'Issue created'});
+            showNotification({severity: 'success', message: `Issue #${response.id} created`});
         }
     });
     const {

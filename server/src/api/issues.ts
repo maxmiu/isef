@@ -66,6 +66,6 @@ export const getIssueDetails = async (req: Request, res: Response) => {
 
 export const addIssue = async (req: Request<NewIssue>, res: Response) => {
     const newIssue = req.body;
-    await issuesRepository.createIssue(newIssue);
-    res.sendStatus(200);
+    const createdIssue = await issuesRepository.createIssue(newIssue);
+    res.json({id: createdIssue.id})
 }
