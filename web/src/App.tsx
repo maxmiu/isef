@@ -37,7 +37,7 @@ function App() {
                           <BrowserRouter>
                               <Navbar/>
                               <Box paddingX={10} marginY={10} display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-                                  <Box width="100%" maxWidth="1400px">
+                                  <Box width="100%" maxWidth="1450px">
                                       <Routes>
                                           <Route path="/login" element={<LoginPage/>}/>
                                           <Route path="/help" element={<HelpPage/>}/>
