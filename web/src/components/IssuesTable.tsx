@@ -9,6 +9,8 @@ import { Issue } from "../../../shared/issue";
 import { User } from "../../../shared/user";
 import { useNavigate } from "react-router-dom";
 import { Dash } from "../infrastructure/special-characters";
+import { IssueMediumChip } from "./IssueMediumChip";
+import { Medium } from "../../../shared/medium";
 
 type IssuesTableProps = {
     issues: Issue[]
@@ -39,6 +41,14 @@ export function IssuesTable(props: IssuesTableProps) {
             headerName: "Type",
             width: 140,
             renderCell: (v: GridRenderCellParams<Type>) => (v.value && <IssueTypeChip value={v.value}/>),
+            headerAlign: "center",
+            align: "center"
+        },
+        {
+            field: "medium",
+            headerName: "Medium",
+            width: 140,
+            renderCell: (v: GridRenderCellParams<Medium>) => (v.value && <IssueMediumChip value={v.value}/>),
             headerAlign: "center",
             align: "center"
         },

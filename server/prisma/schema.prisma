@@ -20,6 +20,7 @@ model Issue {
   assigneeId  Int?
   type        Type
   state       State
+  medium      Medium    @default(Script)
   comments    Comment[]
 }
 
@@ -51,4 +52,13 @@ enum State {
   Open
   Closed
   Rejected
+}
+
+enum Medium {
+  LearnApp
+  OnlineTest
+  Podcast
+  SampleExam
+  Script
+  Vodcast
 }

@@ -13,6 +13,7 @@ export const createIssue = (): NewIssue => {
         comments: many(createComment, 3),
         course: faker.helpers.arrayElement(["IGIS", "IMT", "BWL", "IOBP"]),
         description: faker.lorem.paragraphs(),
+        medium: faker.helpers.arrayElement(["LearnApp", "OnlineTest", "Podcast", "SampleExam", "Script", "Vodcast"]),
         reporter: createUser(),
         state: faker.helpers.arrayElement(["Open", "Closed", "Rejected"]),
         title: faker.lorem.sentence(),

@@ -26,10 +26,11 @@ async function createIssue(newIssue: NewIssue) {
     } : {};
     return await prismaClient.issue.create({
         data: {
-            title: newIssue.title,
-            description: newIssue.description,
             course: newIssue.course,
+            description: newIssue.description,
+            medium: newIssue.medium,
             state: newIssue.state,
+            title: newIssue.title,
             type: newIssue.type,
             reporter: {
                 create: {
@@ -83,6 +84,7 @@ async function updateIssue(update: Issue): Promise<Issue> {
             } : {delete: true},
             course: update.course,
             description: update.description,
+            medium: update.medium,
             state: update.state,
             title: update.title,
             type: update.type,

@@ -3,6 +3,7 @@ import { State } from "./state";
 import { Type } from "./type";
 import { User } from "./user";
 import { Comment } from "./comment";
+import { Medium } from "./medium";
 
 export type NewIssue = Omit<Issue, "id"|"createdAt"|"updatedAt">;
 
@@ -17,5 +18,6 @@ export type Issue = {
   state: State;
   title: string;
   type: Type;
+  medium: Medium;
   updatedAt: Date;
 }

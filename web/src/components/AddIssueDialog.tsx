@@ -24,6 +24,8 @@ import * as Yup from 'yup';
 
 const courses = ["BWL", "IGIS", "IMT", "IOBP", "IPMG", "ISEF"];
 
+const mediums = ["LearnApp" , "OnlineTest" , "Podcast" , "SampleExam" , "Script" , "Vodcast"];
+
 const types = ["Bug", "Improvement"];
 
 export type AddIssueProps = {
@@ -62,6 +64,7 @@ export function AddIssueDialog(props: AddIssueProps) {
         initialValues: {
             description: "",
             assignee: null,
+            medium: "Script",
             reporter: user,
             type: "Bug",
             title: "",
@@ -152,6 +155,15 @@ export function AddIssueDialog(props: AddIssueProps) {
                               <Select error={errors.course !== undefined} fullWidth id="course" name="course"
                                       value={values.course} onChange={handleChange}>
                                   {courses.map((c: string) => (
+                                    <MenuItem key={c} value={c}>{c}</MenuItem>
+                                  ))}
+                              </Select>
+                          </InputBox>
+                          <InputBox>
+                              <InputLabel shrink>Medium</InputLabel>
+                              <Select error={errors.medium !== undefined} fullWidth id="medium" name="medium"
+                                      value={values.medium } onChange={handleChange}>
+                                  {mediums.map((c: string) => (
                                     <MenuItem key={c} value={c}>{c}</MenuItem>
                                   ))}
                               </Select>

@@ -14,6 +14,7 @@ import { UserName } from "../components/UserName";
 import { toLocalDateTime } from "../formatter/date-time-formatter";
 import { Dash } from "../infrastructure/special-characters";
 import { useAuthentication } from "../hooks/useAuthentication";
+import { IssueMediumChip } from "../components/IssueMediumChip";
 
 export function IssueDetailsPage() {
     const {user} = useAuthentication();
@@ -50,9 +51,8 @@ export function IssueDetailsPage() {
               <Box padding={4}>
                   <Box mb={2} display="flex" flexDirection="row">
                       <IssueTypeChip value={data.type}/>
-                      <Box ml={1}>
-                          <IssueStateChip value={data.state}/>
-                      </Box>
+                      <IssueStateChip value={data.state} ml={1}/>
+                      <IssueMediumChip value={data.medium} ml={1}/>
                   </Box>
                   <Typography variant="h3">#{data.id} {Dash} {data.title}</Typography>
                   <Typography variant="overline">
