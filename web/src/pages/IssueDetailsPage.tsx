@@ -37,8 +37,12 @@ export function IssueDetailsPage() {
 
     const nextState = data.state === "Open" ? "Closed" : "Open";
     const toggleIssueState = (newState: State) => updateIssue.mutate({...data, ...{state: newState}});
+    const isCurrentUserAssignee = data.assignee?.email === user.email;
 
-    const assignToMe = () => updateIssue.mutate({...data, ...{assignee: user}});
+    const updateAssignee = () => {
+        const assignee = isCurrentUserAssignee ? {assignee: undefined} : {assignee: user};
+        updateIssue.mutate({...data, ...assignee});
+    }
 
     return (
       <>
@@ -58,7 +62,7 @@ export function IssueDetailsPage() {
                       <Typography variant="overline">Reporter: <UserName user={data.reporter}/></Typography>
                       <Typography variant="overline">Assignee: <UserName user={data.assignee}/></Typography>
                       {isAdminOrTutor && <Box>
-                          <Button disabled={updateIssue.isLoading} onClick={assignToMe} size="small" variant="outlined">Assign to me</Button>
+                          <Button disabled={updateIssue.isLoading} onClick={updateAssignee} size="small" variant="outlined">{isCurrentUserAssignee ?  "Clear assignee" : "Assign to me"}</Button>
                       </Box>}
                   </Box>
                   <Box my={4}>

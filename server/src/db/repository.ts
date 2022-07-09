@@ -80,7 +80,7 @@ async function updateIssue(update: Issue): Promise<Issue> {
                     name: update.assignee.name,
                     email: update.assignee.email
                 }
-            } : undefined,
+            } : {delete: true},
             course: update.course,
             description: update.description,
             state: update.state,
