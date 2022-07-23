@@ -4,6 +4,7 @@
 
 * Install [node](https://nodejs.org/en/)
 * Install [git](https://git-scm.com/)
+* Install [docker](https://www.docker.com/)
 * Clone repository `git clone https://github.com/maxmiu/isef`
 * Run `npm install --global yarn` to install yarn
 * Run `yarn` to install all dependencies
