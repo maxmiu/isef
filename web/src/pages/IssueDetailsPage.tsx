@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
+import { Box, Button, Chip, CircularProgress, Paper, Typography } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { api } from "../api/api";
 import { useParams } from "react-router-dom";
@@ -53,6 +53,7 @@ export function IssueDetailsPage() {
                       <IssueTypeChip value={data.type}/>
                       <IssueStateChip value={data.state} ml={1}/>
                       <IssueMediumChip value={data.medium} ml={1}/>
+                      <Chip sx={{ml: 2}} label={data.course}/>
                   </Box>
                   <Typography variant="h3">#{data.id} {Dash} {data.title}</Typography>
                   <Typography variant="overline">

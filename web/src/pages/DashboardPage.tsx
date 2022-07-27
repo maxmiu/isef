@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, CircularProgress, Typography, useTheme } from "@mui/material";
+import { Box, Card, Chip, CircularProgress, Typography, useTheme } from "@mui/material";
 import { useQuery } from "react-query";
 import { api } from "../api/api";
 import { useAuthentication } from "../hooks/useAuthentication";
@@ -11,6 +11,7 @@ import { Issue } from "../../../shared/issue";
 import { UserName } from "../components/UserName";
 import { Dash } from "../infrastructure/special-characters";
 import { AddIssueButton } from "../components/AddIssueButton";
+import { IssueMediumChip } from "../components/IssueMediumChip";
 
 export function DashboardPage() {
     const {user} = useAuthentication();
@@ -65,6 +66,8 @@ function IssueCard({issue}: { issue: Issue }) {
               <Box ml={1}>
                   <IssueStateChip value={issue.state}/>
               </Box>
+              <IssueMediumChip value={issue.medium} ml={1}/>
+              <Chip sx={{ml: 1}} label={issue.course}/>
           </Box>
           <Box display="flex" justifyContent="space-between">
               <Typography variant="body1"><b>#{issue.id}</b> {issue.title}</Typography>
