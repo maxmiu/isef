@@ -53,7 +53,7 @@ export function IssueDetailsPage() {
                       <IssueTypeChip value={data.type}/>
                       <IssueStateChip value={data.state} ml={1}/>
                       <IssueMediumChip value={data.medium} ml={1}/>
-                      <Chip sx={{ml: 2}} label={data.course}/>
+                      <Chip sx={{ml: 1}} label={data.course}/>
                   </Box>
                   <Typography variant="h3">#{data.id} {Dash} {data.title}</Typography>
                   <Typography variant="overline">
